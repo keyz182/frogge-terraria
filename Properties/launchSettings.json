@@ -1,0 +1,16 @@
+{
+	"profiles": {
+		"Terraria": {
+			"commandName": "Executable",
+			"executablePath": "/home/keyz/.local/share/Steam/steamapps/common/tModLoader/dotnet/dotnet",
+			"commandLineArgs": "/home/keyz/.local/share/Steam/steamapps/common/tModLoader/tModLoader.dll",
+			"workingDirectory": "/home/keyz/.local/share/Steam/steamapps/common/tModLoader/"
+		},
+		"TerrariaServer": {
+			"commandName": "Executable",
+			"executablePath": "$(DotNetName)",
+			"commandLineArgs": "$(tMLServerPath)",
+			"workingDirectory": "$(tMLSteamPath)"
+		}
+	}
+}

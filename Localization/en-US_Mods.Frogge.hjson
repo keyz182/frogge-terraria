@@ -1,0 +1,18 @@
+Buffs: {
+	FroggeBuff: {
+		DisplayName: Frogge
+		Description: It's frogge. He's just a lil guy.
+	}
+}
+
+Items: {
+	Shroom: {
+		DisplayName: Shroom
+		Tooltip: The favoured food of the frogge.
+	}
+}
+
+Projectiles: {
+	FroggeMinion.DisplayName: Frogge
+	FroggeProjectile.DisplayName: Frogge
+}
