@@ -26,8 +26,9 @@ public class Shroom: ModItem
 
 	public override void AddRecipes() {
 		CreateRecipe()
-			.AddIngredient(ItemID.DirtBlock, 10)
-			.AddTile(TileID.WorkBenches)
+			.AddIngredient(ItemID.Mushroom, 5)
+			.AddIngredient(ItemID.Frog, 1)
+			.AddTile(TileID.DemonAltar)
 			.Register();
 	}
 
