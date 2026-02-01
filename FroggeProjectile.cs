@@ -72,7 +72,7 @@ public class FroggeProjectile : ModProjectile
         UpdateExtraMovement();
 
         // Rotates the pet when it moves horizontally.
-        Projectile.rotation += Projectile.velocity.X / 20f;
+        Projectile.rotation += Projectile.velocity.X / 40f;
 
         // Lights up area around it.
         if (!Main.dedServ)
