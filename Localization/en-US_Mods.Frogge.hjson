@@ -3,16 +3,27 @@ Buffs: {
 		DisplayName: Frogge
 		Description: It's frogge. He's just a lil guy.
 	}
+
+	DivineFroggeBuff: {
+		DisplayName: Divine Frogge Buff
+		Description: It's frogge. He's just a lil guy. He sometimes finds coins.
+	}
 }
 
 Items: {
 	Shroom: {
 		DisplayName: Shroom
-		Tooltip: The favoured food of the frogge.
+		Tooltip: The favoured food of frogge.
+	}
+
+	RibbitingShroom: {
+		DisplayName: Ribbiting Shroom
+		Tooltip: "Makes frogge happy. Happy frogge finds shinies."
 	}
 }
 
 Projectiles: {
 	FroggeMinion.DisplayName: Frogge
 	FroggeProjectile.DisplayName: Frogge
+	DivineFroggeProjectile.DisplayName: Divine Frogge Projectile
 }

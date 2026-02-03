@@ -4,30 +4,36 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Utilities;
 
 namespace Frogge;
 
 public class FroggeProjectile : ModProjectile
 {
-    private const int DashCooldown = 1000; // How frequently this pet will dash at enemies.
-    private const float DashSpeed = 20f; // The speed with which this pet will dash at enemies.
-    private const int FadeInTicks = 30;
-    private const int FullBrightTicks = 200;
-    private const int FadeOutTicks = 30;
-    private const float Range = 500f;
+    
+    public virtual int DashCooldown => 1000;
+    public virtual float DashSpeed => 20f;
+    public virtual int FadeInTicks => 30;
+    public virtual int FullBrightTicks => 200;
+    public virtual int FadeOutTicks => 30;
+    public virtual float Range => 500f;
+    
+    
+    // The rate at which the pet will spin.
+    public virtual float SpinRate => 0.25f;
+    
+    public virtual IntRange SpinTimeRange => new(2400, 6000);
 
-    private static readonly float
-        RangeHypotenuse =
-            (float)(Math.Sqrt(2.0) *
-                    Range); // This comes from the formula for calculating the diagonal of a square (a * √2)
+    public virtual float RangeHypotenuse => (float)(Math.Sqrt(2.0) * Range); // This comes from the formula for calculating the diagonal of a square (a * √2)
 
-    private static readonly float RangeHypotenuseSquared = RangeHypotenuse * RangeHypotenuse;
+    public virtual float RangeHypotenuseSquared => RangeHypotenuse * RangeHypotenuse;
 
     // The following 2 lines of code are ref properties (learn about them in google) to the Projectile.ai array entries, which will help us make our code way more readable.
     // We're using the ai array because it's automatically synchronized by the base game in multiplayer, which saves us from writing a lot of boilerplate code.
     // Note that the Projectile.ai array is only 3 entries big. If you need more than 3 synchronized variables - you'll have to use fields and sync them manually.
     public ref float AIFadeProgress => ref Projectile.ai[0];
     public ref float AIDashCharge => ref Projectile.ai[1];
+    public ref float AISpinTimer => ref Projectile.ai[2];
 
     public override void SetStaticDefaults()
     {
@@ -70,9 +76,7 @@ public class FroggeProjectile : ModProjectile
         UpdateDash(player);
         UpdateFading(player);
         UpdateExtraMovement();
-
-        // Rotates the pet when it moves horizontally.
-        Projectile.rotation += Projectile.velocity.X / 40f;
+        UpdateSpinning();
 
         // Lights up area around it.
         if (!Main.dedServ)
@@ -82,6 +86,22 @@ public class FroggeProjectile : ModProjectile
         }
 
         Visuals();
+    }
+
+    private void UpdateSpinning()
+    {
+        if (AISpinTimer > 0)
+        {
+            Projectile.rotation += SpinRate;
+        }
+        
+        if (AISpinTimer >= 120)
+        {
+            // Pick a random wait time. We use negative values to represent the wait phase.
+            AISpinTimer = -SpinTimeRange.RandInRange();
+        }
+        
+        AISpinTimer++;
     }
 
     private void UpdateDash(Player player)
@@ -190,7 +210,10 @@ public class FroggeProjectile : ModProjectile
     private void Visuals()
     {
         // So it will lean slightly towards the direction it's moving
-        Projectile.rotation = Projectile.velocity.X * 0.025f;
+        if (AISpinTimer <= 0)
+        {
+            Projectile.rotation = Projectile.velocity.X * 0.025f;
+        }
 
         // This is a simple "loop through all frames from top to bottom" animation
         int frameSpeed = 5;
