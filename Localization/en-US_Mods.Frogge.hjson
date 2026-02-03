@@ -18,7 +18,7 @@ Items: {
 
 	RibbitingShroom: {
 		DisplayName: Ribbiting Shroom
-		Tooltip: "Makes frogge happy. Happy frogge finds shinies."
+		Tooltip: Makes frogge happy. Happy frogge finds shinies.
 	}
 }
 
